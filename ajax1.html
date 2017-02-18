@@ -7,6 +7,49 @@
 
     <script type="text/javascript">
 
+        var peticionHTTP;
+
+        function inicializar_XHR()
+
+        {
+
+            if (window.XMLHTTPRequest)
+            {
+                peticionHTTP = new XMLHttpRequest();
+            }
+
+            function realizarPeticion(url, metodo, funcion)
+            {
+                //Definir una funcion de como actuar:
+                peticionHTTP.onreadystatechange = funcion;
+
+                //Realizar la petición:
+                peticionHTTP.open(metodo, url, true);
+                peticionHTTP.send(null);
+            }
+
+            function descargarArchivo()
+            {
+                inicializar_XHR();
+                realizarPeticion('archivo.txt', 'GET', funcActuadora);
+
+            }
+
+            function funcActuadora()
+            {
+                if (peticionHTTP.readyState == 4)
+                    if (peticionHTTP.status == 200)
+
+                        document.write(peticionHTTP.responseText);
+                document.write(peticionHTTP.status);
+
+
+            }
+
+            windows.onload = descargarArchivo;
+
+        }
+
 
 
 
